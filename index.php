@@ -27,7 +27,7 @@
 
             <h2 data-bind="text: recordingStatus"></h2>
 
-            <input data-bind="value: recordingTitle" placeholder="recording title">
+            <input data-bind="value: recordingTitle" placeholder="recording title" id="recordingTitle">
             <button id="startRecordingButton" type="button" class="btn btn-primary" data-bind="click: startRecording">Start Recording</button>
             <button id="stopRecordingButton" type="button" class="btn btn-danger" data-bind="click: stopRecording">Stop Recording</button>
 

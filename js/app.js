@@ -99,6 +99,7 @@ var viewModel = function( data ) {
     }
     if (data === 'notRecording') {
       self.recordingStatus('Status: Not Recording');
+      $( '#recordingTitle' ).val('');
       $( '#startRecordingButton' ).css('display', 'inline');
       $( '#stopRecordingButton' ).css('display', 'none');
     }
