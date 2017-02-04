@@ -18,7 +18,7 @@ var viewModel = function( data ) {
       });
     getListOfRecordings.done( function( data ) {
       if (data[0].status === 'recording') {
-        self.renderButtonsAndStatus('recording');
+        self.renderButtonsAndStatus('recording', data[0].title);
       } else {
         self.renderButtonsAndStatus('notRecording');
       }
@@ -90,14 +90,15 @@ var viewModel = function( data ) {
 
   }.bind(this);
 
-  this.renderButtonsAndStatus = function( data ) {
+  this.renderButtonsAndStatus = function( status, title ) {
     var self = this;
-    if (data === 'recording') {
+    if (status === 'recording') {
       self.recordingStatus('Status: Recording');
+      $( '#recordingTitle' ).val(title)
       $( '#startRecordingButton' ).css('display', 'none');
       $( '#stopRecordingButton' ).css('display', 'inline');
     }
-    if (data === 'notRecording') {
+    if (status === 'notRecording') {
       self.recordingStatus('Status: Not Recording');
       $( '#recordingTitle' ).val('');
       $( '#startRecordingButton' ).css('display', 'inline');
