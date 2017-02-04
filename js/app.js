@@ -19,7 +19,10 @@ var viewModel = function( data ) {
 
   this.getRecordings();
 
+  this.recordingTitle = ko.observable('');
   this.startRecording = function() {
+    var self = this;
+
     var startRecordingURL = 'http://' + urlToNginxServer + '/control/record/start?app=' + app + '&name=' + streamname;
     var startRecording = $.ajax({
       url: startRecordingURL,
@@ -31,7 +34,7 @@ var viewModel = function( data ) {
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
       console.log(filename);
-      var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename;
+      var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename + '&title=' + self.recordingTitle();
       var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
       insertRecordingToDB.done( function ( data ) {
         console.log('success adding to DB', data);

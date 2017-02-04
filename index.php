@@ -16,6 +16,7 @@
     <div id="container">
     <br><br><br><br>
 
+    <input data-bind="value: recordingTitle" placeholder="recording title">
     <a data-bind="click: startRecording">Start Recording</a>
 
     <br><br><br><br>

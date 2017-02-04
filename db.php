@@ -31,9 +31,10 @@ if ($action == "insertNewRecording") {
     // insert should always be recording.
     // update should always be recording_stop
     $filename = $_GET["filename"];
+    $title = $_GET["title"];
     $insertFilename = Array ("filename" => $filename,
                    "status" => "recording",
-                   "title" => 'A title'
+                   "title" => $title
     );
     $id = $db->insert ('vodinfo', $insertFilename);
     if($id) {
@@ -47,8 +48,7 @@ if ($action == "insertNewRecording") {
 if ($action == "updateRecordingThatHasStopped") {
     $filename = $_GET["filename"];
     $updateFilename = Array (
-                   "status" => "recording_done",
-                   "title" => 'A title'
+                   "status" => "recording_done"
     );
     $db->where ('filename', $filename);
     if ($db->update ('vodinfo', $updateFilename)) {
