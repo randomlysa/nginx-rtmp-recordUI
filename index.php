@@ -34,10 +34,16 @@
             <hr>
 
             <h2>List of Recordings</h2>
-            <table id="listOfRecordings" style="text-align: center;">
-                <tr>
-                    <th>Date/Time</th><th>Title</th>
-                </tr>
+            <table id="listOfRecordings">
+                <thead>
+                    <tr><th>Date/Time</th><th>Title</th></tr>
+                </thead>
+                <tbody data-bind="foreach: listOfRecordings">
+                    <tr>
+                        <td data-bind="text: datetime"></td>
+                        <td data-bind="text: title"></td>
+                    </tr>
+                </tbody>
             </table>
 
             <hr>

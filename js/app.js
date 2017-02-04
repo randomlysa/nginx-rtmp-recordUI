@@ -8,6 +8,8 @@ var viewModel = function( data ) {
   */
 
   this.recordingStatus = ko.observable();
+  this.listOfRecordings = ko.observableArray();
+
   this.getRecordings = function() {
     var self = this;
     var getListOfRecordings = $.ajax({
@@ -20,9 +22,7 @@ var viewModel = function( data ) {
       } else {
         self.recordingStatus('Status: Not Recording');
       }
-      data.forEach( function( row ) {
-        $( '#listOfRecordings' ).append('<tr><td>' + row.datetime + '</td><td>' + row.title + '</td</tr>');
-      });
+      self.listOfRecordings(data);
     });
     getListOfRecordings.fail( function( data ) {
       console.log('error');
