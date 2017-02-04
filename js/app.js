@@ -62,6 +62,7 @@ var viewModel = function( data ) {
   }.bind(this);
 
   this.stopRecording = function() {
+    var self = this;
     var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&name=' + streamname;
     var stopRecording = $.ajax({
       url: stopRecordingURL,
