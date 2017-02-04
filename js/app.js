@@ -18,9 +18,9 @@ var viewModel = function( data ) {
       });
     getListOfRecordings.done( function( data ) {
       if (data[0].status === 'recording') {
-        self.recordingStatus('Status: Recording');
+        self.renderButtonsAndStatus('recording');
       } else {
-        self.recordingStatus('Status: Not Recording');
+        self.renderButtonsAndStatus('notRecording');
       }
       self.listOfRecordings(data);
     });
@@ -41,6 +41,7 @@ var viewModel = function( data ) {
 
     startRecording.done( function ( data ) {
       console.log('success trying to record~~', data);
+      self.renderButtonsAndStatus('recording');
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
@@ -68,6 +69,7 @@ var viewModel = function( data ) {
 
     stopRecording.done( function ( data ) {
       console.log('success trying to stop recording', data);
+      self.renderButtonsAndStatus('notRecording');
 
       var filename = data.split("/")[3];
       console.log(filename);
@@ -86,6 +88,20 @@ var viewModel = function( data ) {
     });
 
   }.bind(this);
+
+  this.renderButtonsAndStatus = function( data ) {
+    var self = this;
+    if (data === 'recording') {
+      self.recordingStatus('Status: Recording');
+      $( '#startRecordingButton' ).css('display', 'none');
+      $( '#stopRecordingButton' ).css('display', 'inline');
+    }
+    if (data === 'notRecording') {
+      self.recordingStatus('Status: Not Recording');
+      $( '#startRecordingButton' ).css('display', 'inline');
+      $( '#stopRecordingButton' ).css('display', 'none');
+    }
+  }
 }
 
 ko.applyBindings(new viewModel());
