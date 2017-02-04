@@ -105,6 +105,14 @@ var viewModel = function( data ) {
       $( '#stopRecordingButton' ).css('display', 'none');
     }
   }
+
+  this.currentlyPlayingVideoTitle = ko.observable();
+  this.setVideoPlayerFile = function ( data ) {
+    var self = this;
+    console.log (self )
+    self.currentlyPlayingVideoTitle(data.title)
+    $( '#videoPlayerFrame')[0].src = 'videoJS.php?source=' + data.filename;
+  }.bind(this);
 }
 
 ko.applyBindings(new viewModel());
