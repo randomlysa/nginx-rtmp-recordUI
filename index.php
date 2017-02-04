@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <link href="http://vjs.zencdn.net/5.16.0/video-js.css" rel="stylesheet">
-    <!-- If you'd like to support IE8 -->
-    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-
   </head>
   <body>
 
@@ -34,12 +30,12 @@
             <hr>
 
             <h2>List of Recordings</h2>
-            <table id="listOfRecordings">
+            <table id="listOfRecordings" width="100%">
                 <thead>
                     <tr><th>Date/Time</th><th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
-                    <tr>
+                    <tr data-bind="click: $parent.setVideoPlayerFile">
                         <td data-bind="text: datetime"></td>
                         <td data-bind="text: title"></td>
                     </tr>
@@ -48,13 +44,8 @@
 
             <hr>
 
-            <video id="my-video" class="video-js" controls preload="auto" data-setup="{}">
-                <source src="" type='video/rtmp'>
-                <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider upgrading to a web browser that
-                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                </p>
-            </video>
+            <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
+                <iframe id="videoPlayerFrame" src="videoJS.php?source=" allowfullscreen="   allowfullscreen" height="360" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
 
         <div class="col-md-3"></div>
     </div>
@@ -62,7 +53,6 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="js/knockout-3.4.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="http://vjs.zencdn.net/5.16.0/video.js"></script>
     <script src="js/appinfo.js"></script>
     <script src="js/app.js"></script>
   </body>
