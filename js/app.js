@@ -7,16 +7,27 @@ var viewModel = function( data ) {
   var streamname;
   */
 
+  this.recordingStatus = ko.observable();
   this.getRecordings = function() {
-    var getListOfRecordings = $.ajax( 'db.php?action=getAllRecordings');
+    var self = this;
+    var getListOfRecordings = $.ajax({
+        url: 'db.php?action=getAllRecordings',
+        dataType: 'json'
+      });
     getListOfRecordings.done( function( data ) {
-    console.log(data);
+      if (data[0].status === 'recording') {
+        self.recordingStatus('Status: Recording');
+      } else {
+        self.recordingStatus('Status: Not Recording');
+      }
+      data.forEach( function( row ) {
+        $( '#listOfRecordings' ).append('<tr><td>' + row.datetime + '</td><td>' + row.title + '</td</tr>');
+      });
     });
     getListOfRecordings.fail( function( data ) {
-    console.log('error');
+      console.log('error');
     });
   }.bind(this);
-
   this.getRecordings();
 
   this.recordingTitle = ko.observable('');

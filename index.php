@@ -14,14 +14,23 @@
   <body>
 
     <div id="container">
-    <br><br><br><br>
+    <h1>Recording UI</h1>
 
-    <input data-bind="value: recordingTitle" placeholder="recording title">
-    <a data-bind="click: startRecording">Start Recording</a>
+        <h2 data-bind="text: recordingStatus"></h2>
 
-    <br><br><br><br>
-
-    <a data-bind="click: stopRecording">Stop Recording</a>
+        <div>
+            <input data-bind="value: recordingTitle" placeholder="recording title">
+            <a data-bind="click: startRecording">Start Recording</a>
+        </div>
+        <div>
+            <a data-bind="click: stopRecording">Stop Recording</a>
+        </div>
+        <div>
+            <table id="listOfRecordings" style="text-align: center;">
+                <tr>
+                    <th>Date/Time</th><th>Title</th>
+                </tr>
+            </table>
 
     </div>
 
