@@ -1,0 +1,9 @@
+<?php
+
+define("HOST", "example.com");
+define("USERNAME", "username");
+define("PASSWORD", "password");
+define("DATABASE", "database");
+define("VOD_SERVER", "rtmp://EXAMPLE.COM/vod/") // must include 'rtmp://' and the path to '/vod'
+
+?>

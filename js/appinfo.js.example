@@ -1,0 +1,3 @@
+var urlToNginxServer = 'example.com:8080'; // my nginx servers usually run on port 8080
+var app = 'live'; // this is usually live
+var streamname = 'test';
