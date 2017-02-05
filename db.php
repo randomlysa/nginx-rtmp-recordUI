@@ -20,6 +20,7 @@ if ($action == "getAllRecordings") {
     foreach ($allRecordings as $recording) {
         $recordingInfo = array(
             'datetime' => $recording['datetime'],
+            'stream' => $recording['stream'],
             'filename' => $recording['filename'],
             'status' => $recording['status'],
             'title' => $recording['title']
@@ -35,9 +36,11 @@ if ($action == "insertNewRecording") {
     // update should always be recording_stop
     $filename = $_GET["filename"];
     $title = $_GET["title"];
+    $stream = $_GET["stream"];
     $insertFilename = Array (
                    "datetime" => $timestamp,
                    "filename" => $filename,
+                   'stream' => $stream,
                    "status" => "recording",
                    "title" => $title
     );

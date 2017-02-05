@@ -1,16 +1,22 @@
 var viewModel = function( data ) {
+  self = this;
 
-  /*
-  the following vars are defined in appinfo.js
-  var urlToNginxServer; // servername.com:8080 - I usually have nginx running on port 8080.
-  var app; // often the app name is 'live'
-  var streamname;
-  */
-
-  this.recordingStatus = ko.observable();
+  this.recordingStatus = ko.observable('');
   this.listOfRecordings = ko.observableArray();
   this.statusMessages = ko.observableArray();
 
+  if (typeof stream === 'object') {
+    this.stream = ko.observable();
+    this.listOfStreams = ko.observableArray();
+    stream.forEach( function( data ) {
+      this.listOfStreams.push(data);
+    }, this);
+  }
+
+  if (typeof stream == 'string') {
+    this.listOfStreams = null;
+    this.stream = ko.observable(stream);
+  }
 
   this.getRecordings = function( updateUI ) {
     var self = this;
@@ -51,13 +57,13 @@ var viewModel = function( data ) {
   this.recordingTitle = ko.observable('');
   this.startRecording = function() {
     var self = this;
-
-    var startRecordingURL = 'http://' + urlToNginxServer + '/control/record/start?app=' + app + '&name=' + streamname;
+    var startRecordingURL = 'http://' + urlToNginxServer + '/control/record/start?app=' + app + '&name=' + self.stream();
     var startRecording = $.ajax({
       url: startRecordingURL,
       dataType: 'text' });
 
     startRecording.done( function ( data ) {
+
       if ( data === undefined ) {
         self.statusMessages.push({
           type: 'error',
@@ -75,7 +81,8 @@ var viewModel = function( data ) {
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
       if (!self.recordingTitle()) {self.recordingTitle(filename);}
-      var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename + '&title=' + self.recordingTitle();
+      var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename +
+        '&title=' + self.recordingTitle() + '&stream=' + self.stream();
       var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
       insertRecordingToDB.done( function ( data ) {
         console.log('success adding to DB', data);
@@ -96,7 +103,7 @@ var viewModel = function( data ) {
 
   this.stopRecording = function() {
     var self = this;
-    var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&name=' + streamname;
+    var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&stream=' + self.stream().trim();
     var stopRecording = $.ajax({
       url: stopRecordingURL,
       dataType: 'text' });
@@ -117,7 +124,6 @@ var viewModel = function( data ) {
       self.renderButtonsAndStatus('notRecording');
 
       var filename = data.split("/")[3];
-      console.log(filename);
       var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
       var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
       updateRecordingInDB.done( function ( data ) {

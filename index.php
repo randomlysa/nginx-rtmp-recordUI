@@ -20,6 +20,21 @@
             <a href="videoPlayer.php">Link to video player</a>
             <h2 data-bind="text: recordingStatus"></h2>
 
+            <!-- ko if: listOfStreams -->
+            <div>
+                Select a stream to record:
+                <select data-bind="options: listOfStreams, value: stream"></select>
+            </div>
+            <!-- /ko -->
+
+            <!-- ko ifnot: listOfStreams -->
+            <div>
+                Recording stream name: <strong><span data-bind="text: stream"></span></strong>
+            </div>
+            <!-- /ko -->
+
+            <hr>
+
             <input data-bind="value: recordingTitle" placeholder="recording title" id="recordingTitle">
             <button id="startRecordingButton" type="button" class="btn btn-primary" data-bind="click: startRecording">Start Recording</button>
             <button id="stopRecordingButton" type="button" class="btn btn-danger" data-bind="click: stopRecording">Stop Recording</button>
@@ -29,11 +44,12 @@
             <h2>List of Recordings</h2>
             <table id="listOfRecordings" width="100%">
                 <thead>
-                    <tr><th>Date/Time</th><th>Title</th></tr>
+                    <tr><th>Date/Time</th><th>Stream</th><th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
                     <tr data-bind="click: $parent.setVideoPlayerFile, css: status">
                         <td data-bind="text: datetime"></td>
+                        <td data-bind="text: stream"></td>
                         <td data-bind="text: title"></td>
                     </tr>
                 </tbody>
