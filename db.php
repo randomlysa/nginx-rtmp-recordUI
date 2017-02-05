@@ -3,6 +3,9 @@
 require_once ('config.php');
 require_once ('MysqliDb.php');
 
+date_default_timezone_set('America/Chicago');
+$timestamp = date("Y-m-d H:i:s");
+
 $db = new MysqliDb (HOST, USERNAME, PASSWORD, DATABASE);
 
 $action = isset($_GET["action"]) ? $_GET["action"] : '';
@@ -32,7 +35,9 @@ if ($action == "insertNewRecording") {
     // update should always be recording_stop
     $filename = $_GET["filename"];
     $title = $_GET["title"];
-    $insertFilename = Array ("filename" => $filename,
+    $insertFilename = Array (
+                   "datetime" => $timestamp,
+                   "filename" => $filename,
                    "status" => "recording",
                    "title" => $title
     );
