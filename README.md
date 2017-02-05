@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS `vodinfo` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 ```
 4. Upload the files to a web server / directory of your choice. (Must have PHP, MySQL support.)
-5. Open in your browser.
+5. You will probably need to modify your `nginx.conf` file to allow [CORS](https://enable-cors.org/) for the `/control` location. Copy and paste [this code](https://enable-cors.org/server_nginx.html) into the `location /control {}` section. Be sure to leave any other options that are already set in `/location control`.
+6. Open in your browser.
 
 ##Other Info##
 This project uses:
