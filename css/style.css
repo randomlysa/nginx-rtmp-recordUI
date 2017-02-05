@@ -13,3 +13,12 @@
      width: 100%;
      height: 100%;
 }
+
+.error {
+     font-weight: bold;
+     color: #bb0412;
+}
+
+.success {
+     color: #20539f;
+}

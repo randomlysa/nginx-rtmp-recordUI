@@ -46,7 +46,13 @@
                 <iframe id="videoPlayerFrame" src="videoJSframe.php?source=" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
             </div>
 
-        <div class="col-md-3"></div>
+        </div>
+        <div class="col-md-3">
+            <h3>Status Updates</h3>
+            <div data-bind="foreach: statusMessages">
+                <p data-bind="text: text, css: type"></p>
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

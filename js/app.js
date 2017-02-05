@@ -9,6 +9,7 @@ var viewModel = function( data ) {
 
   this.recordingStatus = ko.observable();
   this.listOfRecordings = ko.observableArray();
+  this.statusMessages = ko.observableArray();
 
 
   this.getRecordings = function() {
@@ -33,7 +34,10 @@ var viewModel = function( data ) {
       }
     });
     getListOfRecordings.fail( function( data ) {
-      console.log('error');
+       self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem with the AJAX request to get the list of recordings.'
+        });
     });
   }.bind(this);
   this.getRecordings();
@@ -48,7 +52,18 @@ var viewModel = function( data ) {
       dataType: 'text' });
 
     startRecording.done( function ( data ) {
-      console.log('success trying to record~~', data);
+      if ( data === undefined ) {
+        self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem starting the recording. Perhaps your stream is not live?'
+        });
+        return;
+      }
+
+      self.statusMessages.push({
+          type: 'success',
+          text: 'Success. Recording started.'
+        });
       self.renderButtonsAndStatus('recording');
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
@@ -65,7 +80,10 @@ var viewModel = function( data ) {
     });
 
     startRecording.fail( function ( data ) {
-      console.log('error trying to record~~');
+      self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem with the AJAX request to start recording.'
+        });
     });
   }.bind(this);
 
@@ -77,7 +95,18 @@ var viewModel = function( data ) {
       dataType: 'text' });
 
     stopRecording.done( function ( data ) {
-      console.log('success trying to stop recording', data);
+      if ( data === undefined ) {
+        self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem stopping the recording.'
+        });
+        return;
+      }
+
+      self.statusMessages.push({
+          type: 'success',
+          text: 'Success. Recording stopped.'
+        });
       self.renderButtonsAndStatus('notRecording');
 
       var filename = data.split("/")[3];
@@ -85,15 +114,24 @@ var viewModel = function( data ) {
       var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
       var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
       updateRecordingInDB.done( function ( data ) {
-        console.log('success updating to DB', data);
+        self.statusMessages.push({
+          type: 'success',
+          text: 'Data logged to the database' + data
+        });
       });
       updateRecordingInDB.fail( function () {
-        console.log('NOT success adding to DB');
+        self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem adding the recording information to the database.'
+        });
       });
     });
 
     stopRecording.fail( function ( data ) {
-      console.log('error trying to record~~');
+      self.statusMessages.push({
+          type: 'error',
+          text: 'There was a problem with the AJAX request.'
+        });
     });
 
   }.bind(this);
