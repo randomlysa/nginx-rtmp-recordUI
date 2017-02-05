@@ -32,7 +32,7 @@
                     <tr><th>Date/Time</th><th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
-                    <tr data-bind="click: $parent.setVideoPlayerFile">
+                    <tr data-bind="click: $parent.setVideoPlayerFile, css: status">
                         <td data-bind="text: datetime"></td>
                         <td data-bind="text: title"></td>
                     </tr>

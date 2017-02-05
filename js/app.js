@@ -12,24 +12,28 @@ var viewModel = function( data ) {
   this.statusMessages = ko.observableArray();
 
 
-  this.getRecordings = function() {
+  this.getRecordings = function( updateUI ) {
     var self = this;
+    var updateUI = updateUI;
     var getListOfRecordings = $.ajax({
         url: 'db.php?action=getAllRecordings',
         dataType: 'json'
       });
     getListOfRecordings.done( function( data ) {
-      if (data[0].status === 'recording') {
-        self.renderButtonsAndStatus('recording', data[0].title);
-      } else {
-        self.renderButtonsAndStatus('notRecording');
-      }
       self.listOfRecordings(data);
-      for (var i = 0; i < self.listOfRecordings().length; i++) {
-        var recording = self.listOfRecordings()[i];
-        if (recording.status === 'recording_done') {
-          self.setVideoPlayerFile(recording);
-          break;
+      if (updateUI) {
+        if (data[0].status === 'recording') {
+          self.renderButtonsAndStatus('recording', data[0].title);
+        } else {
+          self.renderButtonsAndStatus('notRecording');
+        }
+
+        for (var i = 0; i < self.listOfRecordings().length; i++) {
+          var recording = self.listOfRecordings()[i];
+          if (recording.status === 'recording_done') {
+            self.setVideoPlayerFile(recording);
+            break;
+          }
         }
       }
     });
@@ -40,7 +44,9 @@ var viewModel = function( data ) {
         });
     });
   }.bind(this);
-  this.getRecordings();
+
+  // initial run to set the UI
+  this.getRecordings(true);
 
   this.recordingTitle = ko.observable('');
   this.startRecording = function() {
@@ -64,7 +70,7 @@ var viewModel = function( data ) {
           type: 'success',
           text: 'Success. Recording started.'
         });
-      self.renderButtonsAndStatus('recording');
+      self.renderButtonsAndStatus('recording', self.recordingTitle());
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
@@ -73,6 +79,7 @@ var viewModel = function( data ) {
       var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
       insertRecordingToDB.done( function ( data ) {
         console.log('success adding to DB', data);
+        self.getRecordings(false)
       });
       insertRecordingToDB.fail( function () {
         console.log('NOT success adding to DB');
@@ -118,6 +125,7 @@ var viewModel = function( data ) {
           type: 'success',
           text: 'Data logged to the database' + data
         });
+        self.getRecordings(false);
       });
       updateRecordingInDB.fail( function () {
         self.statusMessages.push({
