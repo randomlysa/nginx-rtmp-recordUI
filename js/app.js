@@ -10,6 +10,7 @@ var viewModel = function( data ) {
   this.recordingStatus = ko.observable();
   this.listOfRecordings = ko.observableArray();
 
+
   this.getRecordings = function() {
     var self = this;
     var getListOfRecordings = $.ajax({
@@ -23,6 +24,13 @@ var viewModel = function( data ) {
         self.renderButtonsAndStatus('notRecording');
       }
       self.listOfRecordings(data);
+      for (var i = 0; i < self.listOfRecordings().length; i++) {
+        var recording = self.listOfRecordings()[i];
+        if (recording.status === 'recording_done') {
+          self.setVideoPlayerFile(recording);
+          break;
+        }
+      }
     });
     getListOfRecordings.fail( function( data ) {
       console.log('error');
@@ -45,7 +53,6 @@ var viewModel = function( data ) {
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
-      console.log(filename);
       var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename + '&title=' + self.recordingTitle();
       var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
       insertRecordingToDB.done( function ( data ) {
@@ -106,12 +113,11 @@ var viewModel = function( data ) {
     }
   }
 
-  this.currentlyPlayingVideoTitle = ko.observable();
+  this.currentlyPlayingVideoTitle = ko.observable('');
   this.setVideoPlayerFile = function ( data ) {
     var self = this;
-    console.log (self )
     self.currentlyPlayingVideoTitle(data.title)
-    $( '#videoPlayerFrame')[0].src = 'videoJS.php?source=' + data.filename;
+    $( '#videoPlayerFrame')[0].src = 'videoJSframe.php?source=' + data.filename;
   }.bind(this);
 }
 

@@ -17,6 +17,7 @@
 
         <div class="col-md-6">
 
+            <a href="videoPlayer.php">Link to video player</a>
             <h2 data-bind="text: recordingStatus"></h2>
 
             <input data-bind="value: recordingTitle" placeholder="recording title" id="recordingTitle">
@@ -41,7 +42,9 @@
             <hr>
 
             <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
-                <iframe id="videoPlayerFrame" src="videoJS.php?source=" allowfullscreen="   allowfullscreen" height="360" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+            <div class="videoJSembed">
+                <iframe id="videoPlayerFrame" src="videoJSframe.php?source=" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+            </div>
 
         <div class="col-md-3"></div>
     </div>

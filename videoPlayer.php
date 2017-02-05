@@ -14,7 +14,10 @@
 
             <div class="col-md-6">
                 <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
-                <iframe id="videoPlayerFrame" src="videoJS.php?source=" allowfullscreen="   allowfullscreen" height="360" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+
+                <div class="videoJSembed">
+                    <iframe id="videoPlayerFrame" width="640" height="375" style="padding: 0; margin: 0; border: 0;" src="videoJSframe.php?source=" allowfullscreen=" allowfullscreen"></iframe>
+                </div>
 
                 <table id="listOfRecordings" width="100%">
                     <thead>
