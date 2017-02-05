@@ -1,7 +1,3 @@
-<?php
-// this dir contains files necessary to record / play 2017 macs basketball VOD
-?>
-
 <!DOCTYPE html>
 <html>
   <head>
