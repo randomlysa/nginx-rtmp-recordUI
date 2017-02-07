@@ -41,7 +41,7 @@
 
             <hr>
 
-            <h2>List of Recordings</h2>
+            <h2 data-bind="text: listOfRecordingsHeaderText"></h2>
             <table id="listOfRecordings" width="100%">
                 <thead>
                     <tr><th>Date/Time</th><th>Stream</th><th>Title</th></tr>

@@ -3,6 +3,7 @@ var viewModel = function( data ) {
 
   this.recordingStatus = ko.observable('');
   this.listOfRecordings = ko.observableArray();
+  this.listOfRecordingsHeaderText = ko.observable();
   this.statusMessages = ko.observableArray();
 
   if (typeof stream === 'object') {
@@ -18,7 +19,7 @@ var viewModel = function( data ) {
     this.stream = ko.observable(stream);
   }
 
-  this.getRecordings = function( updateUI ) {
+  this.getAndDisplayRecordings = function( updateUI ) {
     var self = this;
     var updateUI = updateUI;
     var getListOfRecordings = $.ajax({
@@ -27,7 +28,16 @@ var viewModel = function( data ) {
       });
     getListOfRecordings.done( function( data ) {
       self.listOfRecordings(data);
-      if (updateUI) {
+
+      if (data.length === 0) {
+        self.listOfRecordingsHeaderText('No Recordings Found');
+        $( '#listOfRecordings' ).css('visibility', 'hidden');
+        self.renderButtonsAndStatus('notRecording');
+      }
+      if (updateUI && data.length > 0) {
+        console.log('38')
+        self.listOfRecordingsHeaderText('List of Recordings');
+        $( '#listOfRecordings' ).css('visibility', 'visible');
         if (data[0].status === 'recording') {
           self.renderButtonsAndStatus('recording', data[0].title);
         } else {
@@ -52,7 +62,7 @@ var viewModel = function( data ) {
   }.bind(this);
 
   // initial run to set the UI
-  this.getRecordings(true);
+  this.getAndDisplayRecordings(true);
 
   this.recordingTitle = ko.observable('');
   this.startRecording = function() {
@@ -76,7 +86,6 @@ var viewModel = function( data ) {
           type: 'success',
           text: 'Success. Recording started.'
         });
-      self.renderButtonsAndStatus('recording', self.recordingTitle());
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split("/")[3];
@@ -86,7 +95,8 @@ var viewModel = function( data ) {
       var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
       insertRecordingToDB.done( function ( data ) {
         console.log('success adding to DB', data);
-        self.getRecordings(false)
+        self.getAndDisplayRecordings(true);
+        self.renderButtonsAndStatus('recording', self.recordingTitle());
       });
       insertRecordingToDB.fail( function () {
         console.log('NOT success adding to DB');
@@ -128,7 +138,7 @@ var viewModel = function( data ) {
                 text: 'Success. Recording was already stopped, database updated.'
               });
               self.renderButtonsAndStatus('notRecording');
-              self.getRecordings(false);
+              self.getAndDisplayRecordings(false);
             });
           };
         });
@@ -149,7 +159,7 @@ var viewModel = function( data ) {
             text: 'Data logged to the database' + data
           });
           self.renderButtonsAndStatus('notRecording');
-          self.getRecordings(false);
+          self.getAndDisplayRecordings(false);
         });
         updateRecordingInDB.fail( function () {
           self.statusMessages.push({
@@ -173,13 +183,13 @@ var viewModel = function( data ) {
     var self = this;
     if (status === 'recording') {
       self.recordingStatus('Status: Recording');
-      $( '#recordingTitle' ).val(title)
+      self.recordingTitle(title);
       $( '#startRecordingButton' ).css('display', 'none');
       $( '#stopRecordingButton' ).css('display', 'inline');
     }
     if (status === 'notRecording') {
       self.recordingStatus('Status: Not Recording');
-      $( '#recordingTitle' ).val('');
+      self.recordingTitle('');
       $( '#startRecordingButton' ).css('display', 'inline');
       $( '#stopRecordingButton' ).css('display', 'none');
     }
