@@ -3,3 +3,4 @@ var app = 'live'; // this is usually live
 // stream can be a string or an array, the UI will update for either
 // var stream = 'test1';
 var stream = ['test1', 'test2', 'test3', 'test4'];
+var urlToCheckIfLive = 'http://example.com/checklive.php?stream=' // returns 'live' or 'notlive'
