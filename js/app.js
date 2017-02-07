@@ -109,37 +109,56 @@ var viewModel = function( data ) {
       dataType: 'text' });
 
     stopRecording.done( function ( data ) {
+      // if the stream stopped publishing but the recording was not turned off yet,
+      // nginx will not return any data for /control/record/stop
       if ( data === undefined ) {
-        self.statusMessages.push({
-          type: 'error',
-          text: 'There was a problem stopping the recording.'
+        urlToCheckIfLive += self.stream();
+        var checkLive = $.ajax({
+          // urlToCheckIfLive should return 'live' if live, otherwise 'notlive'
+          url: urlToCheckIfLive,
+          dataType: 'text'
+        })
+        checkLive.done( function ( data ) {
+          if (data === 'notlive') {
+            var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&stream=' + self.stream();
+            var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
+            updateRecordingInDB.done( function ( data ) {
+              self.statusMessages.push({
+                type: 'success',
+                text: 'Success. Recording was already stopped, database updated.'
+              });
+              self.renderButtonsAndStatus('notRecording');
+              self.getRecordings(false);
+            });
+          };
         });
-        return;
-      }
+      };
 
-      self.statusMessages.push({
-          type: 'success',
-          text: 'Success. Recording stopped.'
-        });
-      self.renderButtonsAndStatus('notRecording');
+      if ( data ) {
+        self.statusMessages.push({
+            type: 'success',
+            text: 'Success. Recording stopped.'
+          });
 
-      var filename = data.split("/")[3];
-      var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
-      var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
-      updateRecordingInDB.done( function ( data ) {
-        self.statusMessages.push({
-          type: 'success',
-          text: 'Data logged to the database' + data
+        var filename = data.split("/")[3];
+        var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
+        var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
+        updateRecordingInDB.done( function ( data ) {
+          self.statusMessages.push({
+            type: 'success',
+            text: 'Data logged to the database' + data
+          });
+          self.renderButtonsAndStatus('notRecording');
+          self.getRecordings(false);
         });
-        self.getRecordings(false);
-      });
-      updateRecordingInDB.fail( function () {
-        self.statusMessages.push({
-          type: 'error',
-          text: 'There was a problem adding the recording information to the database.'
+        updateRecordingInDB.fail( function () {
+          self.statusMessages.push({
+            type: 'error',
+            text: 'There was a problem adding the recording information to the database.'
+          });
         });
-      });
-    });
+      };
+    }); // end stopRecording.done
 
     stopRecording.fail( function ( data ) {
       self.statusMessages.push({

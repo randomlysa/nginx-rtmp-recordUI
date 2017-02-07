@@ -55,11 +55,18 @@ if ($action == "insertNewRecording") {
 
 if ($action == "updateRecordingThatHasStopped") {
     $filename = $_GET["filename"];
-    $updateFilename = Array (
+    $stream = $_GET["stream"];
+    $updateRecording = Array (
                    "status" => "recording_done"
     );
-    $db->where ('filename', $filename);
-    if ($db->update ('vodinfo', $updateFilename)) {
+    if ($filename) {
+        $db->where ('filename', $filename);
+    }
+    if ($stream) {
+        $db->where ('stream', $stream);
+    }
+    // run the update
+    if ($db->update ('vodinfo', $updateRecording)) {
         echo $db->count . ' records were updated';
     }
     else {
