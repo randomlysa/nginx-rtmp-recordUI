@@ -195,11 +195,12 @@ var viewModel = function( data ) {
     }
   }
 
-  this.currentlyPlayingVideoTitle = ko.observable('');
+  this.currentlyPlayingVideoTitle = ko.observable();
+  this.currentlyPlayingVideoSrc = ko.observable()
   this.setVideoPlayerFile = function ( data ) {
     var self = this;
     self.currentlyPlayingVideoTitle(data.title)
-    $( '#videoPlayerFrame')[0].src = 'videoJSframe.php?source=' + data.filename;
+    self.currentlyPlayingVideoSrc('videoJSframe.php?source=' + data.filename);
   }.bind(this);
 }
 

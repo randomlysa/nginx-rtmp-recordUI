@@ -59,7 +59,7 @@
 
             <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
             <div class="videoJSembed">
-                <iframe id="videoPlayerFrame" src="videoJSframe.php?source=" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+                <iframe data-bind="attr: {'src': currentlyPlayingVideoSrc}" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
             </div>
 
         </div>

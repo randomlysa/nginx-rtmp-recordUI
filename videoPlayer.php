@@ -16,7 +16,7 @@
                 <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
 
                 <div class="videoJSembed">
-                    <iframe id="videoPlayerFrame" width="640" height="375" style="padding: 0; margin: 0; border: 0;" src="videoJSframe.php?source=" allowfullscreen=" allowfullscreen"></iframe>
+                    <iframe data-bind="attr: {'src': currentlyPlayingVideoSrc}" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
                 </div>
 
                 <table id="listOfRecordings" width="100%">
