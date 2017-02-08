@@ -16,7 +16,19 @@ CREATE TABLE IF NOT EXISTS `vodinfo` (
 ```
 4. Upload the files to a web server / directory of your choice. (Must have PHP, MySQL support.)
 5. You will probably need to modify your `nginx.conf` file to allow [CORS](https://enable-cors.org/) for the `/control` location. Copy and paste [this code](https://enable-cors.org/server_nginx.html) into the `location /control {}` section. Be sure to leave any other options that are already set in `/location control`.
-6. Open in your browser.
+6. If not already done, set up nginx to record. Example: <br>
+`application live {`<br>
+`live on;`<br>
+`record all manual;`<br>
+ `record_path /tmp/rec;`<br>
+`record_unique on;`<br>
+`exec_record_done bash -c "/path/to/script.sh $filename $basename"; // this script converts flv to mp4`
+`}`<br>
+Example script: <br>
+`/path/to/ffmpeg -i /tmp/rec/${fileName} -c:v copy -c:a copy /var/vod/${baseName}.mp4`
+<br>
+7. Make sure `/tmp/rec` and `/var/vod` exist.
+8. Open in your browser.
 
 ##Other Info##
 This project uses:

@@ -88,7 +88,7 @@ var viewModel = function( data ) {
         });
 
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
-      var filename = data.split("/")[3];
+      var filename = data.split('/')[3].split('.')[0] + '.mp4';
       if (!self.recordingTitle()) {self.recordingTitle(filename);}
       var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename +
         '&title=' + self.recordingTitle() + '&stream=' + self.stream();
@@ -150,7 +150,7 @@ var viewModel = function( data ) {
             text: 'Success. Recording stopped.'
           });
 
-        var filename = data.split("/")[3];
+        var filename = data.split('/')[3].split('.')[0] + '.mp4';
         var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
         var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
         updateRecordingInDB.done( function ( data ) {
