@@ -203,6 +203,47 @@ var viewModel = function( data ) {
     self.currentlyPlayingVideoTitle(data.title)
     self.currentlyPlayingVideoSrc('videoJSframe.php?source=' + data.filename);
   }.bind(this);
+
+  this.editVideoTitle = function () {
+    var self = this;
+    $( '#editVideoTitle' ).html('<input id="editVideoTitleText" type="text" data-bind="value: currentlyPlayingVideoTitle, event: { change: updateVideoTitle } ">');
+    $( '#editVideoTitleText' ).val(self.currentlyPlayingVideoTitle()).focus();;
+    ko.applyBindings(self, $( '#editVideoTitleText' )[0]);
+  }.bind(this);
+
+  this.updateVideoTitle = function () {
+    var self = this;
+    // split 'videoJSframe.php?source=filename' and get only the filename
+    var filename = self.currentlyPlayingVideoSrc().split("=")[1];
+    var newTitle = self.currentlyPlayingVideoTitle();
+
+    $( '#editVideoTitle' ).html(self.currentlyPlayingVideoTitle());
+
+    var updateNewTitle = $.ajax({
+      url: 'db.php?action=updateVideoTitle&filename=' + filename + '&newTitle=' + newTitle,
+    });
+    updateNewTitle.done( function( data ) {
+      if (data === '1 records were updated') {
+        self.statusMessages.push({
+          type: 'success',
+          text: 'Success. Title updated.'
+        });
+        self.getAndDisplayRecordings(true);
+      }
+      else {
+       self.statusMessages.push({
+          type: 'error',
+          text: 'There was an error updating your title.'
+        });
+      }
+    });
+    updateNewTitle.fail( function() {
+      self.statusMessages.push({
+        type: 'error',
+        text: 'There was an error making the AJAX call to update your title.'
+      });
+    });
+  }.bind(this);
 }
 
 ko.applyBindings(new viewModel());

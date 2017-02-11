@@ -64,7 +64,9 @@
 
             <hr>
 
-            <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
+            <h2 id="editVideoTitle" data-bind="text: currentlyPlayingVideoTitle,
+                attr: { 'filename': currentlyPlayingVideoSrc },
+                event: { dblclick: editVideoTitle }"></h2>
             <div class="videoJSembed">
                 <iframe data-bind="attr: {'src': currentlyPlayingVideoSrc}" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
             </div>

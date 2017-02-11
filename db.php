@@ -73,4 +73,21 @@ if ($action == "updateRecordingThatHasStopped") {
         echo 'update failed: ' . $db->getLastError();
     }
 }
+
+if ($action == "updateVideoTitle") {
+    $filename = $_GET["filename"];
+    $newTitle = $_GET["newTitle"];
+    $updateVideoTitle = Array (
+                   "title" => $newTitle
+    );
+    $db->where ('filename', $filename);
+    // run the update
+    if ($db->update ('vodinfo', $updateVideoTitle)) {
+        echo $db->count . ' records were updated';
+    }
+    else {
+        echo 'update failed: ' . $db->getLastError();
+    }
+}
+
 ?>
