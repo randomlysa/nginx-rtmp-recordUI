@@ -37,7 +37,6 @@ var viewModel = function( data ) {
         self.renderButtonsAndStatus('notRecording');
       }
       if (updateUI && data.length > 0) {
-        console.log('38')
         self.listOfRecordingsHeaderText('List of Recordings');
         $( '#listOfRecordings' ).css('visibility', 'visible');
         if (data[0].status === 'recording') {
