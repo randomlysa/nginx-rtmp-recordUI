@@ -44,12 +44,19 @@
             <h2 data-bind="text: listOfRecordingsHeaderText"></h2>
             <table id="listOfRecordings" width="100%">
                 <thead>
-                    <tr><th>Date/Time</th><th>Stream</th><th>Title</th></tr>
+                    <tr>
+                        <th>Date/Time</th>
+                        <!-- ko if: listOfStreams -->
+                            <th>Stream</th>
+                        <!-- /ko -->
+                        <th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
                     <tr data-bind="click: $parent.setVideoPlayerFile, css: status">
                         <td data-bind="text: datetime"></td>
-                        <td data-bind="text: stream"></td>
+                        <!-- ko if: $parent.listOfStreams -->
+                            <td data-bind="text: stream"></td>
+                        <!-- /ko -->
                         <td data-bind="text: title"></td>
                     </tr>
                 </tbody>

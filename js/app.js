@@ -6,7 +6,8 @@ var viewModel = function( data ) {
   this.listOfRecordingsHeaderText = ko.observable();
   this.statusMessages = ko.observableArray();
 
-  if (typeof stream === 'object') {
+  if (Array.isArray(stream)) {
+    // 'many stream' mode
     this.stream = ko.observable();
     this.listOfStreams = ko.observableArray();
     stream.forEach( function( data ) {
@@ -15,6 +16,7 @@ var viewModel = function( data ) {
   }
 
   if (typeof stream == 'string') {
+    // 'single stream' mode
     this.listOfStreams = null;
     this.stream = ko.observable(stream);
   }
