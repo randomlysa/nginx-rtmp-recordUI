@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS `vodinfo` (
 `exec_record_done bash -c "/path/to/script.sh $filename $basename"; // this script converts flv to mp4`
 `}`<br>
 Example script: <br>
-`/path/to/ffmpeg -i /tmp/rec/${fileName} -c:v copy -c:a copy /var/vod/${baseName}.mp4`
+`/path/to/ffmpeg -i /tmp/rec/${fileName} -c:v copy -c:a copy /var/vod/${baseName}.mp4`<br>
+`rm /tmp/rec/${fileName}`
 <br>
 7. Make sure `/tmp/rec` and `/var/vod` exist.
 8. Open in your browser.
