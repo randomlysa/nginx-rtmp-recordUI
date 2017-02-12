@@ -228,9 +228,9 @@ var viewModel = function( data ) {
 
     $( '#editVideoTitle' ).html(self.currentlyPlayingVideoTitle());
 
-    var updateNewTitle = $.ajax({
-      url: 'db.php?action=updateVideoTitle&filename=' + filename + '&newTitle=' + newTitle,
-    });
+    var updateNewTitle = $.ajax(
+      'db.php?action=updateVideoTitle&filename=' + filename + '&newTitle=' + newTitle
+    );
     updateNewTitle.done( function( data ) {
       if (data === '1 records were updated') {
         self.statusMessages.push({
