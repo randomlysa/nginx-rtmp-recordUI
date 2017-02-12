@@ -29,7 +29,10 @@
 
             <!-- ko ifnot: listOfStreams -->
             <div>
-                Recording stream name: <strong><span data-bind="text: stream"></span></strong>
+                Recording stream name: <strong><span data-bind="text: stream"></span></strong><br>
+                <strong>Storage used (MB)</strong><br>
+                    Current recording: <span data-bind="text: sizeCurrentRecording"></span>
+                    Other recordings: <span data-bind="text: sizeOtherRecordings"></span>
             </div>
             <!-- /ko -->
 

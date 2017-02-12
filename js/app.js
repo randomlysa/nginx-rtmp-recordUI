@@ -194,12 +194,14 @@ var viewModel = function( data ) {
       self.recordingTitle(title);
       $( '#startRecordingButton' ).css('display', 'none');
       $( '#stopRecordingButton' ).css('display', 'inline');
+      this.getStorageUseage();
     }
     if (status === 'notRecording') {
       self.recordingStatus('Status: Not Recording');
       self.recordingTitle('');
       $( '#startRecordingButton' ).css('display', 'inline');
       $( '#stopRecordingButton' ).css('display', 'none');
+      this.getStorageUseage();
     }
   }
 
@@ -251,6 +253,23 @@ var viewModel = function( data ) {
       });
     });
   }.bind(this);
+
+  this.sizeCurrentRecording = ko.observable();
+  this.sizeOtherRecordings = ko.observable();
+  this.getStorageUseage = function() {
+    var self = this;
+    var getStorageUseageAjax = $.ajax({
+      url: 'files.php?stream=' + self.stream(),
+      dataType: 'json'
+    });
+    getStorageUseageAjax.done( function( data ) {
+      self.sizeCurrentRecording( data.tmprec )
+      self.sizeOtherRecordings( data.varvod )
+    });
+  }.bind(this);
+
+  window.setInterval( this.getStorageUseage, 15000);
+
 }
 
 ko.applyBindings(new viewModel());
