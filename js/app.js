@@ -91,9 +91,16 @@ var viewModel = function( data ) {
       // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
       var filename = data.split('/')[3].split('.')[0] + '.mp4';
       if (!self.recordingTitle()) {self.recordingTitle(filename);}
-      var insertRecordingToDBUrl = 'db.php?action=insertNewRecording&filename=' + filename +
-        '&title=' + self.recordingTitle() + '&stream=' + self.stream();
-      var insertRecordingToDB = $.ajax( insertRecordingToDBUrl );
+      var insertRecordingToDB = $.ajax({
+        url: 'db.php',
+        type: "POST",
+        data: {
+          action: 'insertNewRecording',
+          filename: filename,
+          title: self.recordingTitle(),
+          stream: self.stream()
+        }
+      });
       insertRecordingToDB.done( function ( data ) {
         console.log('success adding to DB', data);
         self.getAndDisplayRecordings(true);

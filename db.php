@@ -8,7 +8,12 @@ $timestamp = date("Y-m-d H:i:s");
 
 $db = new MysqliDb (HOST, USERNAME, PASSWORD, DATABASE);
 
-$action = isset($_GET["action"]) ? $_GET["action"] : '';
+if ($action = isset($_GET["action"])) {
+    $action = $_GET["action"];
+}
+elseif ($action = isset($_POST["action"])) {
+    $action = $_POST["action"];
+}
 
 if ($action == "getAllRecordings") {
     // get all recordings, return as JSON object, with newest on top
@@ -34,9 +39,9 @@ if ($action == "getAllRecordings") {
 if ($action == "insertNewRecording") {
     // insert should always be recording.
     // update should always be recording_stop
-    $filename = $_GET["filename"];
-    $title = $_GET["title"];
-    $stream = $_GET["stream"];
+    $filename = $_POST["filename"];
+    $title = $_POST["title"];
+    $stream = $_POST["stream"];
     $insertFilename = Array (
                    "datetime" => $timestamp,
                    "filename" => $filename,
