@@ -45,11 +45,11 @@
             <hr>
 
             <h2 data-bind="text: listOfRecordingsHeaderText"></h2>
-            <table id="listOfRecordings" width="100%">
+            <table id="listOfRecordingsTable" width="100%">
                 <thead>
                     <tr>
                         <th>Date/Time</th>
-                        <!-- ko if: listOfStreams -->
+                        <!-- ko if: $root.listOfStreams -->
                             <th>Stream</th>
                         <!-- /ko -->
                         <th>Title</th></tr>
@@ -57,7 +57,7 @@
                 <tbody data-bind="foreach: listOfRecordings">
                     <tr data-bind="click: $parent.setVideoPlayerFile, css: status">
                         <td data-bind="text: datetime"></td>
-                        <!-- ko if: $parent.listOfStreams -->
+                        <!-- ko if: $root.listOfStreams -->
                             <td data-bind="text: stream"></td>
                         <!-- /ko -->
                         <td data-bind="text: title"></td>
@@ -67,12 +67,23 @@
 
             <hr>
 
-            <h2 id="editVideoTitle" data-bind="text: currentlyPlayingVideoTitle,
-                attr: { 'filename': currentlyPlayingVideoSrc },
-                event: { dblclick: editVideoTitle }"></h2>
-            <div class="videoJSembed">
-                <iframe data-bind="attr: {'src': currentlyPlayingVideoSrc}" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+            <div id="editVideoTitleBox" data-bind="foreach: listOfRecordings">
+                <!-- ko if: loadedInPlayer -->
+                <h2  data-bind="text: title, css: {editing: editing},
+                        attr: { 'filename': filename },
+                        event: { dblclick: $parent.editVideoTitle }"></h2>
+                </h2>
+                <input id="editInput" id="editVideoTitleText" type="text"
+                     data-bind="value: title,
+                        event: { blur: $parent.updateVideoTitle },
+                        css: {editing: editing }">
+
+                <div class="videoJSembed">
+                    <iframe data-bind="attr: { 'src': 'videoJSframe.php?source=' + filename() }" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+                </div>
+                <!-- /ko -->
             </div>
+
 
         </div>
         <div class="col-md-3">

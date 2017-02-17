@@ -1,4 +1,14 @@
-var viewModel = function( data ) {
+var Video = function (datetime, stream, filename, status, title) {
+this.datetime = ko.observable(datetime);
+this.stream = ko.observable(stream);
+this.filename = ko.observable(filename);
+this.status = ko.observable(status);
+this.title = ko.observable(title);
+this.loadedInPlayer = ko.observable(false);
+this.editing = ko.observable(false);
+}
+
+  var ViewModel = function() {
   self = this;
 
   this.recordingStatus = ko.observable('');
@@ -28,18 +38,20 @@ var viewModel = function( data ) {
         url: 'db.php?action=getAllRecordings',
         dataType: 'json'
       });
-    getListOfRecordings.done( function( data ) {
-      self.listOfRecordings(data);
+    getListOfRecordings.done( function( video ) {
+      self.listOfRecordings(video.map( function ( video ) {
+        return new Video(video.datetime, video.stream, video.filename, video.status, video.title );
+      }));
 
-      if (data.length === 0) {
+      if (video.length === 0) {
         self.listOfRecordingsHeaderText('No Recordings Found');
-        $( '#listOfRecordings' ).css('visibility', 'hidden');
+        $( '#listOfRecordingsTable' ).css('visibility', 'hidden');
         self.renderButtonsAndStatus('notRecording');
       }
-      if (updateUI && data.length > 0) {
+      if (updateUI && video.length > 0) {
         self.listOfRecordingsHeaderText('List of Recordings');
-        $( '#listOfRecordings' ).css('visibility', 'visible');
-        if (data[0].status === 'recording') {
+        $( '#listOfRecordingsTable' ).css('visibility', 'visible');
+        if (video[0].status === 'recording') {
           self.renderButtonsAndStatus('recording', data[0].title);
         } else {
           self.renderButtonsAndStatus('notRecording');
@@ -47,7 +59,7 @@ var viewModel = function( data ) {
 
         for (var i = 0; i < self.listOfRecordings().length; i++) {
           var recording = self.listOfRecordings()[i];
-          if (recording.status === 'recording_done') {
+          if (recording.status() === 'recording_done') {
             self.setVideoPlayerFile(recording);
             break;
           }
@@ -205,28 +217,23 @@ var viewModel = function( data ) {
     }
   }
 
-  this.currentlyPlayingVideoTitle = ko.observable();
-  this.currentlyPlayingVideoSrc = ko.observable()
-  this.setVideoPlayerFile = function ( data ) {
-    var self = this;
-    self.currentlyPlayingVideoTitle(data.title)
-    self.currentlyPlayingVideoSrc('videoJSframe.php?source=' + data.filename);
+  this.setVideoPlayerFile = function ( video ) {
+    // set all other videos to inactive
+    this.listOfRecordings().forEach( function ( video ) {
+      video.loadedInPlayer(false);
+    })
+    // set clicked video to active
+    video.loadedInPlayer(true);
   }.bind(this);
 
-  this.editVideoTitle = function () {
-    var self = this;
-    $( '#editVideoTitle' ).html('<input id="editVideoTitleText" type="text" data-bind="value: currentlyPlayingVideoTitle, event: { change: updateVideoTitle } ">');
-    $( '#editVideoTitleText' ).val(self.currentlyPlayingVideoTitle()).focus();;
-    ko.applyBindings(self, $( '#editVideoTitleText' )[0]);
-  }.bind(this);
+  this.editVideoTitle = function ( video ) {
+    video.editing(true);
+    $( '#editInput' ).focus();;
+  };
 
-  this.updateVideoTitle = function () {
-    var self = this;
-    // split 'videoJSframe.php?source=filename' and get only the filename
-    var filename = self.currentlyPlayingVideoSrc().split("=")[1];
-    var newTitle = self.currentlyPlayingVideoTitle();
-
-    $( '#editVideoTitle' ).html(self.currentlyPlayingVideoTitle());
+  this.updateVideoTitle = function ( video ) {
+    var filename = video.filename();
+    var newTitle = video.title();
 
     var updateNewTitle = $.ajax(
       'db.php?action=updateVideoTitle&filename=' + filename + '&newTitle=' + newTitle
@@ -238,6 +245,7 @@ var viewModel = function( data ) {
           text: 'Success. Title updated.'
         });
         self.getAndDisplayRecordings(true);
+        video.editing(false);
       }
       else {
        self.statusMessages.push({
@@ -272,4 +280,4 @@ var viewModel = function( data ) {
 
 }
 
-ko.applyBindings(new viewModel());
+ko.applyBindings(new ViewModel());

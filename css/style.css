@@ -35,3 +35,21 @@ tr:hover {background-color: #77a3e3;}
 #startRecordingButton, #stopRecordingButton {
      display: none;
 }
+
+#editVideoTitleBox h2 {
+     display: block;
+}
+
+#editVideoTitleBox h2.editing {
+     display: none;
+}
+
+#editVideoTitleBox input  {
+     position: relative;
+     display: none;
+}
+
+#editVideoTitleBox input.editing {
+     display: block;
+}
+
