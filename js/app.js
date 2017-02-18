@@ -52,7 +52,7 @@ this.editing = ko.observable(false);
         self.listOfRecordingsHeaderText('List of Recordings');
         $( '#listOfRecordingsTable' ).css('visibility', 'visible');
         if (video[0].status === 'recording') {
-          self.renderButtonsAndStatus('recording', data[0].title);
+          self.renderButtonsAndStatus('recording', video[0].title);
         } else {
           self.renderButtonsAndStatus('notRecording');
         }
