@@ -207,6 +207,7 @@ this.editing = ko.observable(false);
       $( '#startRecordingButton' ).css('display', 'none');
       $( '#stopRecordingButton' ).css('display', 'inline');
       this.getStorageUseage();
+      window.setInterval( this.getStorageUseage, 15000 );
     }
     if (status === 'notRecording') {
       self.recordingStatus('Status: Not Recording');
@@ -214,6 +215,7 @@ this.editing = ko.observable(false);
       $( '#startRecordingButton' ).css('display', 'inline');
       $( '#stopRecordingButton' ).css('display', 'none');
       this.getStorageUseage();
+      window.clearInterval( this.getStorageUseage, 15000 );
     }
   }
 
@@ -275,9 +277,6 @@ this.editing = ko.observable(false);
       self.sizeOtherRecordings( data.varvod )
     });
   }.bind(this);
-
-  window.setInterval( this.getStorageUseage, 15000);
-
 }
 
 ko.applyBindings(new ViewModel());
