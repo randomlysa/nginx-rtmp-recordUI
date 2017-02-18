@@ -1,11 +1,11 @@
 var Video = function (datetime, stream, filename, status, title) {
-this.datetime = ko.observable(datetime);
-this.stream = ko.observable(stream);
-this.filename = ko.observable(filename);
-this.status = ko.observable(status);
-this.title = ko.observable(title);
-this.loadedInPlayer = ko.observable(false);
-this.editing = ko.observable(false);
+  this.datetime = ko.observable(datetime);
+  this.stream = ko.observable(stream);
+  this.filename = ko.observable(filename);
+  this.status = ko.observable(status);
+  this.title = ko.observable(title);
+  this.loadedInPlayer = ko.observable(false);
+  this.editing = ko.observable(false);
 }
 
   var ViewModel = function() {
