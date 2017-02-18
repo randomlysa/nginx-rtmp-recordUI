@@ -11,7 +11,7 @@ var Video = function (datetime, stream, filename, status, title) {
   var ViewModel = function() {
   self = this;
 
-  this.recordingStatus = ko.observable('');
+  this.recordingStatus = ko.observable();
   this.listOfRecordings = ko.observableArray();
   this.listOfRecordingsHeaderText = ko.observable();
   this.statusMessages = ko.observableArray();
