@@ -65,7 +65,7 @@
                         <th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
-                    <tr data-bind="click: $parent.setVideoPlayerFile, css: status">
+                    <tr data-bind="click: $parent.setLoadedInPlayerVideo, css: status">
                         <td data-bind="text: datetime"></td>
                         <!-- ko if: $root.listOfStreams -->
                             <td data-bind="text: stream"></td>
@@ -78,8 +78,7 @@
             <hr>
 
             <h4>Title of loaded video (double click to rename)</h4>
-            <div id="editVideoTitleBox" data-bind="foreach: listOfRecordings">
-                <!-- ko if: loadedInPlayer -->
+            <div id="editVideoTitleBox" data-bind="foreach: currentVideo">
                 <h2  data-bind="text: title, css: {editing: editing},
                         attr: { 'filename': filename },
                         event: { dblclick: $parent.editVideoTitle }"></h2>
@@ -92,7 +91,6 @@
                 <div class="videoJSembed">
                     <iframe data-bind="attr: { 'src': 'videoJSframe.php?source=' + filename() }" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
                 </div>
-                <!-- /ko -->
             </div>
 
 

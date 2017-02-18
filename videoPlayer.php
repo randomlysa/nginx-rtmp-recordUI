@@ -13,10 +13,9 @@
             <div class="col-md-3"></div>
 
             <div class="col-md-6">
-                <h2 data-bind="text: currentlyPlayingVideoTitle"></h2>
-
-                <div class="videoJSembed">
-                    <iframe data-bind="attr: {'src': currentlyPlayingVideoSrc}" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+                <div class="videoJSembed" data-bind="foreach: currentVideo">
+                    <h2 data-bind="text: title()"></h2>
+                    <iframe data-bind="attr: {'src': 'videoJSframe.php?source=' + filename() }" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
                 </div>
 
                 <table id="listOfRecordings" width="100%">

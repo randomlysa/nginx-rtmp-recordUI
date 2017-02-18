@@ -15,6 +15,15 @@ var Video = function (datetime, stream, filename, status, title) {
   this.listOfRecordings = ko.observableArray();
   this.listOfRecordingsHeaderText = ko.observable();
   this.statusMessages = ko.observableArray();
+  // http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+  // set currentVideo to the instance that has loadedInPlayer === true
+  this.currentVideo = ko.computed( function() {
+    return ko.utils.arrayFilter(this.listOfRecordings(), function(video) {
+      if (video.loadedInPlayer() === true) {
+        return video;
+      }
+    });
+  }, this);
 
   if (Array.isArray(stream)) {
     // 'many stream' mode
@@ -60,7 +69,7 @@ var Video = function (datetime, stream, filename, status, title) {
         for (var i = 0; i < self.listOfRecordings().length; i++) {
           var recording = self.listOfRecordings()[i];
           if (recording.status() === 'recording_done') {
-            self.setVideoPlayerFile(recording);
+            self.setLoadedInPlayerVideo(recording);
             break;
           }
         }
@@ -219,7 +228,7 @@ var Video = function (datetime, stream, filename, status, title) {
     }
   }
 
-  this.setVideoPlayerFile = function ( video ) {
+  this.setLoadedInPlayerVideo = function ( video ) {
     // set all other videos to inactive
     this.listOfRecordings().forEach( function ( video ) {
       video.loadedInPlayer(false);
