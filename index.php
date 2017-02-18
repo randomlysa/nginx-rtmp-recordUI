@@ -11,14 +11,14 @@
   <body>
 
     <div id="container">
-    <h1>Recording UI</h1>
 
         <div class="col-md-3"></div>
 
         <div class="col-md-6">
 
-            <a href="videoPlayer.php">Link to video player</a>
-            <h2 data-bind="text: recordingStatus"></h2>
+            <h1 id="title">Recording UI</h1>
+
+            <h2 id="recordingStatus" data-bind="text: recordingStatus"></h2>
 
             <!-- ko if: listOfStreams -->
             <div>
@@ -28,19 +28,29 @@
             <!-- /ko -->
 
             <!-- ko ifnot: listOfStreams -->
-            <div>
-                Recording stream name: <strong><span data-bind="text: stream"></span></strong><br>
-                <strong>Storage used (MB)</strong><br>
+            <h4>Storage used (MB)</h4>
+            <div class="row">
+                <div class="col-md-6">
                     Current recording: <span data-bind="text: sizeCurrentRecording"></span>
+                </div>
+                <div class="col-md-6">
                     Previous recordings: <span data-bind="text: sizeOtherRecordings"></span>
+                </div>
             </div>
             <!-- /ko -->
 
-            <hr>
+            <a href="videoPlayer.php">Link to video player</a>
 
+
+            <h4>Title of current video</h4>
             <input data-bind="value: recordingTitle" placeholder="recording title" id="recordingTitle">
-            <button id="startRecordingButton" type="button" class="btn btn-primary" data-bind="click: startRecording">Start Recording</button>
-            <button id="stopRecordingButton" type="button" class="btn btn-danger" data-bind="click: stopRecording">Stop Recording</button>
+
+            <button id="startRecordingButton" type="button" class="btn btn-primary"
+                data-bind="click: startRecording, text: 'Start Recording: ' + stream()">
+            </button>
+            <button id="stopRecordingButton" type="button" class="btn btn-danger"
+                data-bind="click: stopRecording, text: 'Stop Recording: ' + stream()">
+            </button>
 
             <hr>
 
@@ -67,6 +77,7 @@
 
             <hr>
 
+            <h4>Title of loaded video (double click to rename)</h4>
             <div id="editVideoTitleBox" data-bind="foreach: listOfRecordings">
                 <!-- ko if: loadedInPlayer -->
                 <h2  data-bind="text: title, css: {editing: editing},

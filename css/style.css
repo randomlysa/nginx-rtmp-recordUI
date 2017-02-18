@@ -1,5 +1,20 @@
+/*
+     https://coolors.co/9c9096-432e36-d3cdcb-af8d86-afb7d8
+*/
+
 body {
      font-size: 16pt;
+}
+
+
+#title {
+     text-align: center;
+}
+
+h2, h3, h4 {
+     text-align: center;
+     padding: 5px;
+     background-color: #d3cdcb;
 }
 
 .videoJSembed {
@@ -31,6 +46,17 @@ body {
 tr:nth-child(even) {background-color: #f2f2f2;}
 tr:hover {background-color: #77a3e3;}
 
+#recordingTitle {
+     width: 100%;
+     font-size: 20pt;
+     margin-bottom: 10px;
+}
+
+#startRecordingButton, #stopRecordingButton {
+     width: 100%;
+     font-size: 20pt;
+}
+
 
 #startRecordingButton, #stopRecordingButton {
      display: none;
@@ -47,6 +73,7 @@ tr:hover {background-color: #77a3e3;}
 #editVideoTitleBox input  {
      position: relative;
      display: none;
+     width: 100%;
 }
 
 #editVideoTitleBox input.editing {
