@@ -62,7 +62,7 @@ if ($action == "updateRecordingThatHasStopped") {
     $filename = $_GET["filename"];
     $stream = $_GET["stream"];
     $updateRecording = Array (
-                   "status" => "recording_done"
+                   "status" => ""
     );
     if ($filename) {
         $db->where ('filename', $filename);

@@ -65,7 +65,7 @@
                         <th>Title</th></tr>
                 </thead>
                 <tbody data-bind="foreach: listOfRecordings">
-                    <tr data-bind="click: $parent.setLoadedInPlayerVideo, css: status">
+                    <tr data-bind="click: $parent.setLoadedInPlayerVideo, css: {recording: status, loadedInPlayer: loadedInPlayer}">
                         <td data-bind="text: datetime"></td>
                         <!-- ko if: $root.listOfStreams -->
                             <td data-bind="text: stream"></td>

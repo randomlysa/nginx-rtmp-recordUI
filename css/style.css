@@ -43,6 +43,8 @@ h2, h3, h4 {
 }
 
 .recording {background-color: #d9534f;}
+.loadedInPlayer {font-weight: bold;}
+
 tr:nth-child(even) {background-color: #f2f2f2;}
 tr:hover {background-color: #77a3e3;}
 

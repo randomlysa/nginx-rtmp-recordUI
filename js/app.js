@@ -68,7 +68,7 @@ var Video = function (datetime, stream, filename, status, title) {
 
         for (var i = 0; i < self.listOfRecordings().length; i++) {
           var recording = self.listOfRecordings()[i];
-          if (recording.status() === 'recording_done') {
+          if (!recording.status()) {
             self.setLoadedInPlayerVideo(recording);
             break;
           }
