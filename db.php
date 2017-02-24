@@ -18,6 +18,16 @@ elseif ($action = isset($_POST["action"])) {
 if ($action == "getAllRecordings") {
     // get all recordings, return as JSON object, with newest on top
     // so if anything is being recorded, it should be on top (assuming a single app is being recorded)
+    if ($stream = isset($_GET["stream"])) {
+        $stream = $_GET["stream"];
+    }
+    if (!$stream) {
+        // temporary. focusing on single stream mode, not on 'admin/all stream' mode.
+        echo "Error. No stream specified.";
+        exit;
+    }
+
+    $db->where ('stream', $stream);
     $db->orderBy("datetime","DESC");
     $allRecordings = $db->get('vodinfo');
     $arrayOfRecordings = array();

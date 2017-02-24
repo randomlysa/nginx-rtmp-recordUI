@@ -44,7 +44,7 @@ var Video = function (datetime, stream, filename, status, title) {
     var self = this;
     var updateUI = updateUI;
     var getListOfRecordings = $.ajax({
-        url: 'db.php?action=getAllRecordings',
+        url: 'db.php?action=getAllRecordings&stream=' + self.stream(),
         dataType: 'json'
       });
     getListOfRecordings.done( function( video ) {
