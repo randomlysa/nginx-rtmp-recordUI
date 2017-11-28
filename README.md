@@ -1,7 +1,8 @@
-##Synopsis##
+# Basics
+
 A user interface to record and display recordings for the [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module/).
 
-##Setup##
+## Setup
 1. Modify `config.php.example` and `js/appinfo.js.example`.
 2. Rename them to `config.php` and `js/appinfo.js`
 3. Create a database table:
@@ -31,7 +32,7 @@ Example script: <br>
 7. Make sure `/tmp/rec` and `/var/vod` exist.
 8. Open in your browser.
 
-##Other Info##
+## Other Info
 This project uses:
 
 * [Videojs](http://videojs.com/)
@@ -40,4 +41,4 @@ This project uses:
 * [jQuery](http://jquery.com)
 * [Bootstrap](http://getbootstrap.com)
 
-My email address is in my github profile.
+My email address is in my github profile
