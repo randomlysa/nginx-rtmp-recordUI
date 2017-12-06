@@ -10,6 +10,14 @@
   </head>
   <body>
 
+  <?php
+    $stream = $_GET['stream'];
+    if (!$stream) {
+        echo 'Error: Stream name not specified.';
+        exit;
+    }
+  ?>
+
     <div id="container">
 
         <div class="col-md-3"></div>

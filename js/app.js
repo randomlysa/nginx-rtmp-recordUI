@@ -1,3 +1,5 @@
+var stream = window.location.href.split('=')[1];
+
 var Video = function (datetime, stream, filename, status, title) {
   this.datetime = ko.observable(datetime);
   this.stream = ko.observable(stream);
