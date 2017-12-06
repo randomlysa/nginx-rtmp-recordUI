@@ -29,7 +29,7 @@ Example script: <br>
 `/path/to/ffmpeg -i /tmp/rec/$1 -c:v copy -c:a copy /var/vod/$2.mp4`<br>
 `rm /tmp/rec/$1`
 <br>
-7. Make sure `/tmp/rec` and `/var/vod` exist.
+7. Make sure `/tmp/rec` and `/var/vod` exist. <br>
 8. Open in your browser.
 
 ## Other Info
