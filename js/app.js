@@ -10,7 +10,7 @@ var Video = function (datetime, stream, filename, status, title) {
   this.editing = ko.observable(false);
 }
 
-  var ViewModel = function() {
+var ViewModel = function() {
   self = this;
 
   this.recordingStatus = ko.observable();
