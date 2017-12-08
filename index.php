@@ -13,7 +13,14 @@
   <?php
     $stream = $_GET['stream'];
     if (!$stream) {
-        echo 'Error: Stream name not specified.';
+        ?>
+        Error: Stream name not specified. <br />
+        <form method="POST" action="updateStream.php">
+            <input type="text" name="stream" placeholder="Stream Name" />
+            <input type="submit" />
+        </form>
+
+        <?php
         exit;
     }
   ?>
