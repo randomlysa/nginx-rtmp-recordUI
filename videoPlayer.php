@@ -11,13 +11,16 @@
 
     <div id="container">
         <div class="row">
-            <div class="col-md-3"></div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <!-- ko foreach: currentVideo -->
                 <h2 data-bind="text: title()"></h2><br>
                 <div class="videoJSembed">
-                    <iframe data-bind="attr: {'src': 'videoJSframe.php?source=' + filename() }" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+                    <iframe
+                        data-bind="attr: {'src': 'videoJSframe.php?source=' + filename() }"
+                        id="videoPlayerFrame"
+                        allowfullscreen="allowfullscreen"
+                    >
+                    </iframe>
                 </div>
                 <!-- /ko -->
                 <div>
@@ -35,9 +38,7 @@
                         </tbody>
                     </table>
                 </div>
-
-            <div class="col-md-3"></div>
-        </div>
+        </div><!-- row -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
