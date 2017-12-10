@@ -54,7 +54,7 @@
             </div>
             <!-- /ko -->
 
-            <a href="videoPlayer.php">Link to video player</a>
+            <a href="videoPlayer.php?stream=<?php echo $stream; ?>">Link to video player</a>
 
 
             <h4>Title of current video</h4>
