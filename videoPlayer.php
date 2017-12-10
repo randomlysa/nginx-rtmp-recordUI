@@ -29,7 +29,7 @@
                         </thead>
                         <tbody data-bind="foreach: listOfRecordings">
                             <tr data-bind="click: $parent.setLoadedInPlayerVideo, css: {recording: status, loadedInPlayer: loadedInPlayer}">
-                                <td data-bind="text: datetime"></td>
+                                <td data-bind="text: moment(datetime(), 'YYYY-MM-DD HH:mm:ss').format('dddd A, MMMM D, YYYY')"></td>
                                 <td data-bind="text: title"></td>
                             </tr>
                         </tbody>
@@ -43,6 +43,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="js/knockout-3.4.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.js"></script>
     <script src="js/appinfo.js"></script>
     <script src="js/app.js"></script>
   </body>
