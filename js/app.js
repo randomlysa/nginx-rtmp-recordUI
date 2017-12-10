@@ -284,8 +284,8 @@ var ViewModel = function() {
       dataType: 'json'
     });
     getStorageUseageAjax.done( function( data ) {
-      self.sizeCurrentRecording( data.tmprec )
-      self.sizeOtherRecordings( data.varvod )
+      self.sizeCurrentRecording( data.currentRec )
+      self.sizeOtherRecordings( data.allRec )
     });
   }.bind(this);
 }
