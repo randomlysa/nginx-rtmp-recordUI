@@ -104,7 +104,13 @@
                         css: {editing: editing }">
 
                 <div class="videoJSembed">
-                    <iframe data-bind="attr: { 'src': 'videoJSframe.php?source=' + filename() }" id="videoPlayerFrame" allowfullscreen=" allowfullscreen" height="370" style="width: 100%; text-align: center; border: none; padding: none;"></iframe>
+                    <iframe
+                        data-bind="attr: {'src': 'videoJSframe.php?source=' + filename() }"
+                        id="videoPlayerFrame"
+                        allowfullscreen="allowfullscreen"
+                        scrolling="no"
+                    >
+                    </iframe>
                 </div>
             </div>
 

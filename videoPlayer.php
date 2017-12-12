@@ -19,6 +19,7 @@
                         data-bind="attr: {'src': 'videoJSframe.php?source=' + filename() }"
                         id="videoPlayerFrame"
                         allowfullscreen="allowfullscreen"
+                        scrolling="no"
                     >
                     </iframe>
                 </div>
