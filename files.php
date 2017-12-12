@@ -17,8 +17,7 @@ foreach ($scanDirs as $key=>$dir) {
   $thisDirSize = 0;
   foreach ($filesThisDir as $file) {
     if ($file != "." && $file != "..") {
-      $checkWhichStreamFileBelongsTo = explode("-", $file);
-      if ($stream == $checkWhichStreamFileBelongsTo[0]) {
+      if (strpos($file, $stream) !== false) {
         $thisDirSize += filesize($dir . $file) / 1000000;
       }
     }
