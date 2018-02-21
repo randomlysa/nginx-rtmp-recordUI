@@ -19,6 +19,10 @@ if (!$command) {
 
 if ($command == "record") {
   $output = shell_exec($recordCommand);
+  // Print the filename - it's returned as 'data' in the ajax call, inserted
+  // into the database and it might be used to check if the recording really
+  // started.
+  print "${stream}_${time}.flv";
 }
 
 if ($command === "stoprecord") {
