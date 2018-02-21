@@ -99,7 +99,9 @@ var ViewModel = function() {
 
     // This should return an object that includes the filename.
     startRecording.done( function ( data ) {
-      if ( data === undefined ) {
+      // Todo: add a check later to see if the file exists. If it doesn't, throw
+      // an error.
+      if (data.listSessions === '') {
         self.statusMessages.push({
           type: 'error',
           text: 'There was a problem starting the recording. Perhaps your stream is not live?'
