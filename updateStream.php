@@ -9,8 +9,8 @@ function clean($string) {
 $stream = clean($_POST["stream"]);
 
 $http_host =  "http://{$_SERVER['HTTP_HOST']}";
-$request =  substr($_SERVER['REQUEST_URI'], 0, 12);
+$request =  explode("/", $_SERVER['REQUEST_URI']);
 
-header('Location: ' . $http_host . $request . "?stream=" . $stream);
+header('Location: ' . $http_host . "/" . $request[1] . "?stream=" . $stream);
 
 ?>
