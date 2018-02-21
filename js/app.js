@@ -94,9 +94,10 @@ var ViewModel = function() {
     var startRecordingURL = 'startStopRecording.php?command=record&app=' + app + '&stream=' + self.stream();
     var startRecording = $.ajax({
       url: startRecordingURL,
-      dataType: 'text' });
+      dataType: 'json'
+    });
 
-      // This should return the name of the file that should have been created.
+    // This should return an object that includes the filename.
     startRecording.done( function ( data ) {
       if ( data === undefined ) {
         self.statusMessages.push({
@@ -104,16 +105,6 @@ var ViewModel = function() {
           text: 'There was a problem starting the recording. Perhaps your stream is not live?'
         });
         return;
-      // Check if file was created.
-      } else {
-          // This needs to be delayed because it takes a while for the file to
-          // be created, or I need a better solution.
-          // $.ajax({
-          //   url: 'fileExists.php?file=' + data
-          // })
-          // .done( function (data ) {
-          //   console.log(data);
-          // });
       }
 
       self.statusMessages.push({
@@ -122,13 +113,13 @@ var ViewModel = function() {
       });
 
       // Insert file, title, stream name into the database.
-      if (!self.recordingTitle()) {self.recordingTitle(data);}
+      if (!self.recordingTitle()) {self.recordingTitle(data.filename);}
       var insertRecordingToDB = $.ajax({
         url: 'db.php',
         type: "POST",
         data: {
           action: 'insertNewRecording',
-          filename: data,
+          filename: data.filename,
           title: self.recordingTitle(),
           stream: self.stream()
         }
@@ -153,7 +144,8 @@ var ViewModel = function() {
 
   this.stopRecording = function() {
     var self = this;
-    var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&stream=' + self.stream().trim();
+    // var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&stream=' + self.stream().trim();
+    var stopRecordingURL = 'startStopRecording.php?command=stoprecord&stream=' + self.stream();
     var stopRecording = $.ajax({
       url: stopRecordingURL,
       dataType: 'text' });
@@ -188,10 +180,9 @@ var ViewModel = function() {
         self.statusMessages.push({
             type: 'success',
             text: 'Success. Recording stopped.'
-          });
+        });
 
-        var filename = data.split('/')[3].split('.')[0] + '.mp4';
-        var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&filename=' + filename;
+        var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&stream=' + self.stream();;
         var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
         updateRecordingInDB.done( function ( data ) {
           self.statusMessages.push({

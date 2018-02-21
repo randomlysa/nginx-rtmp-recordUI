@@ -17,15 +17,26 @@ if (!$command) {
   exit;
 }
 
+$returnedInfo = array();
+
 if ($command == "record") {
-  $output = shell_exec($recordCommand);
-  // Print the filename - it's returned as 'data' in the ajax call, inserted
-  // into the database and it might be used to check if the recording really
-  // started.
-  print "${stream}_${time}.flv";
+  $output = exec($recordCommand);
+  // See if the record command returned any info.
+  $returnedInfo['tmuxOutput'] = $output;
+
+  // See if the session exists.
+  $checkTmux = exec('tmux list-sessions');
+  $returnedInfo['listSessions'] = $checkTmux;
+
+  // Add the filename to the array.
+  $returnedInfo['filename'] = "${stream}_${time}.flv";
+
+  print json_encode($returnedInfo);
 }
 
 if ($command === "stoprecord") {
   $output = shell_exec($stopRecordCommand);
+  // Stop recording ajax call expects something to be returned.
+  print "stopped";
 }
 ?>
