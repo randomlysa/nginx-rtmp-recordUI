@@ -91,35 +91,44 @@ var ViewModel = function() {
   this.recordingTitle = ko.observable('');
   this.startRecording = function() {
     var self = this;
-    var startRecordingURL = 'http://' + urlToNginxServer + '/control/record/start?app=' + app + '&name=' + self.stream();
+    var startRecordingURL = 'startStopRecording.php?command=record&app=' + app + '&stream=' + self.stream();
     var startRecording = $.ajax({
       url: startRecordingURL,
       dataType: 'text' });
 
+      // This should return the name of the file that should have been created.
     startRecording.done( function ( data ) {
-
       if ( data === undefined ) {
         self.statusMessages.push({
           type: 'error',
           text: 'There was a problem starting the recording. Perhaps your stream is not live?'
         });
         return;
+      // Check if file was created.
+      } else {
+          // This needs to be delayed because it takes a while for the file to
+          // be created, or I need a better solution.
+          // $.ajax({
+          //   url: 'fileExists.php?file=' + data
+          // })
+          // .done( function (data ) {
+          //   console.log(data);
+          // });
       }
 
       self.statusMessages.push({
           type: 'success',
           text: 'Success. Recording started.'
-        });
+      });
 
-      // sample filename: /tmp/rec/STREAMNAME-UNIQUEID.flv
-      var filename = data.split('/')[3].split('.')[0] + '.mp4';
-      if (!self.recordingTitle()) {self.recordingTitle(filename);}
+      // Insert file, title, stream name into the database.
+      if (!self.recordingTitle()) {self.recordingTitle(data);}
       var insertRecordingToDB = $.ajax({
         url: 'db.php',
         type: "POST",
         data: {
           action: 'insertNewRecording',
-          filename: filename,
+          filename: data,
           title: self.recordingTitle(),
           stream: self.stream()
         }
