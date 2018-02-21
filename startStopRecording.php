@@ -9,7 +9,7 @@ $stream = $_GET["stream"];
 $time = time();
 
 $urlToStream = "rtmp://" . URL_TO_STREAMING_SERVER . "/$app/$stream";
-$recordCommand = "tmux new-session -d -n ${stream} ffmpeg -i '${urlToStream}' -c copy -f flv 'recordings/${stream}_${time}.flv' 2>&1";
+$recordCommand = "tmux new-session -d -s ${stream} ffmpeg -i '${urlToStream}' -c copy -f flv 'recordings/${stream}_${time}.flv' 2>&1";
 $stopRecordCommand = "tmux send-keys -t ${stream} q";
 
 if (!$command) {
