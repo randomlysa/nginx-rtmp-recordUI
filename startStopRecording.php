@@ -33,7 +33,7 @@ if ($command == "record") {
   $returnedInfo['listSessions'] = $checkTmux;
 
   // Add the filename to the array.
-  $returnedInfo['filename'] = "${stream}_${time}.flv";
+  $returnedInfo['filename'] = "${stream}_${time}.mp4";
 
   print json_encode($returnedInfo);
 }
