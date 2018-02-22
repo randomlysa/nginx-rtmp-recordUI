@@ -1,9 +1,19 @@
 <?php
 
-define("HOST", "example.com");
-define("USERNAME", "username");
-define("PASSWORD", "password");
-define("DATABASE", "database");
-define("VOD_SERVER", "rtmp://EXAMPLE.COM/vod/") // must include 'rtmp://' and the path to '/vod'
+// DATABASE CONFIG
+define ("HOST", "HOST_IP");
+define ("USERNAME", "USERNAME");
+define ("PASSWORD", "PASSWORD");
+define("DATABASE", "DATABASE");
+
+
+// RECORDING CONFIG
+// URL to recorded files. *Must be writable by the webserver.*
+define("URL_TO_RECORDINGS", "http://domain/recordings/");
+// Stream to 'pull' the recordings from. No path or app.
+define("URL_TO_STREAMING_SERVER", "domain");
+// Set a specific path to ffmpeg if needed.
+define("FFMPEG", "ffmpeg");
+define("PATH_TO_RECORDINGS", "/var/www/html/recordings/");
 
 ?>
