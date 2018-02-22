@@ -86,6 +86,6 @@ h2, h3, h4 {
 
 tr:nth-child(even) {background-color: #f2f2f2;}
 /* Don't highlight the first row on hover. */
-tr:hover:not(:first-child) {background-color: #77a3e3;}
+tbody tr:hover {background-color: #77a3e3;}
 
 .loadedInPlayer {font-weight: bold;}
