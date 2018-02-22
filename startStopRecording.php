@@ -8,8 +8,10 @@ $stream = $_GET["stream"];
 // Time is appended to the file name so each file is unique.
 $time = time();
 
+$ffmpegPreset = "-preset veryfast";
+
 $urlToStream = "rtmp://" . URL_TO_STREAMING_SERVER . "/$app/$stream";
-$recordCommand = "tmux new-session -d -s ${stream} ffmpeg -i '${urlToStream}' -c copy -f mp4 'recordings/${stream}_${time}.mp4' 2>&1";
+$recordCommand = "tmux new-session -d -s ${stream} " . FFMPEG . " -i '${urlToStream}' -c:a copy -c:v libx264 ${ffmpegPreset} -f mp4 'recordings/${stream}_${time}.mp4' 2>&1";
 $stopRecordCommand = "tmux send-keys -t ${stream} q";
 
 if (!$command) {
