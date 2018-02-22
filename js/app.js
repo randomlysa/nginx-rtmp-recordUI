@@ -89,8 +89,12 @@ var ViewModel = function() {
   this.getAndDisplayRecordings(true);
 
   this.recordingTitle = ko.observable('');
+  // Used to change the button text immediately on click.
+  this.recordButtonText = ko.observable('Start Recording: ' + self.stream());
   this.startRecording = function() {
     var self = this;
+    // Change button text immediately.
+    self.recordButtonText('Initializing recording...');
     var startRecordingURL = 'startStopRecording.php?command=record&app=' + app + '&stream=' + self.stream();
     var startRecording = $.ajax({
       url: startRecordingURL,
@@ -102,6 +106,8 @@ var ViewModel = function() {
       // Todo: add a check later to see if the file exists. If it doesn't, throw
       // an error.
       if (data.listSessions === '') {
+
+        self.recordButtonText('Start Recording: ' + self.stream());
         self.statusMessages.push({
           type: 'error',
           text: 'There was a problem starting the recording. Perhaps your stream is not live?'

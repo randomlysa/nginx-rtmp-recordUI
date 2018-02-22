@@ -61,7 +61,7 @@
             <input data-bind="value: recordingTitle" placeholder="recording title" id="recordingTitle">
 
             <button id="startRecordingButton" type="button" class="btn btn-primary"
-                data-bind="click: startRecording, text: 'Start Recording: ' + stream()">
+                data-bind="click: startRecording, text: recordButtonText()">
             </button>
             <button id="stopRecordingButton" type="button" class="btn btn-danger"
                 data-bind="click: stopRecording, text: 'Stop Recording: ' + stream()">
