@@ -1,29 +1,26 @@
 <?php
+require('./config.php');
 
 $stream = $_GET["stream"];
+// TODO: POST currently recorded file name here to check size?
 if (!$stream) { exit; }
 
 $allSizes = array("allRec" => 0, "currentRec" => 0);
-$scanDirs = array("/var/www/ss-content/video-recordings/", "/tmp/rec/");
+$scanDirs = array(PATH_TO_RECORDINGS, "/tmp/rec/");
 
-foreach ($scanDirs as $key=>$dir) {
-  if ($key == 0) {
-    $whichDir = "allRec";
-  } else {
-    $whichDir = "currentRec";
-  }
+$recordedFiles = scandir(PATH_TO_RECORDINGS);
+// This now includes all recordings, including current.
+$sizeOfAllRecordings = 0;
 
-  $filesThisDir = scandir($dir);
-  $thisDirSize = 0;
-  foreach ($filesThisDir as $file) {
-    if ($file != "." && $file != "..") {
-      if (strpos($file, $stream) !== false) {
-        $thisDirSize += filesize($dir . $file) / 1000000;
-      }
+foreach ($recordedFiles as $file) {
+  if ($file != "." && $file != "..") {
+    if (strpos($file, $stream) !== false) {
+      $sizeOfAllRecordings += filesize(PATH_TO_RECORDINGS . $file) / 1000000;
     }
-    $allSizes[$whichDir] = round($thisDirSize, 2);
-  } // foreach $filesThisDir
-} // foreach $scanDirs
+  }
+  $allSizes['allRec'] = round($sizeOfAllRecordings, 2);
+} // foreach $recordedFiles
+
 print json_encode($allSizes);
 
 ?>
