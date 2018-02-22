@@ -49,7 +49,7 @@
                     Current recording: <span data-bind="text: sizeCurrentRecording"></span>
                 </div>
                 <div class="col-md-6">
-                    Previous recordings: <span data-bind="text: sizeOtherRecordings"></span>
+                    All recordings: <span data-bind="text: sizeOtherRecordings"></span>
                 </div>
             </div>
             <!-- /ko -->
