@@ -1,4 +1,2 @@
-var urlToNginxServer = 'example.com:8080'; // my nginx servers usually run on port 8080
-var app = 'live'; // this is usually live
-
-var urlToCheckIfLive = 'http://example.com/checklive.php?stream=' // returns 'live' or 'notlive'
+// the app of your rtmp server to record from. rtmp://server.com/APP/StreamName
+var app = 'live';
