@@ -152,38 +152,12 @@ var ViewModel = function() {
 
   this.stopRecording = function() {
     var self = this;
-    // var stopRecordingURL = 'http://' + urlToNginxServer + '/control/record/stop?app=' + app + '&stream=' + self.stream().trim();
     var stopRecordingURL = 'startStopRecording.php?command=stoprecord&stream=' + self.stream();
     var stopRecording = $.ajax({
       url: stopRecordingURL,
       dataType: 'text' });
 
     stopRecording.done( function ( data ) {
-      // if the stream stopped publishing but the recording was not turned off yet,
-      // nginx will not return any data for /control/record/stop
-      if ( data === undefined ) {
-        urlToCheckIfLive += self.stream();
-        var checkLive = $.ajax({
-          // urlToCheckIfLive should return 'live' if live, otherwise 'notlive'
-          url: urlToCheckIfLive,
-          dataType: 'text'
-        })
-        checkLive.done( function ( data ) {
-          if (data === 'notlive') {
-            var updateRecordingInDBUrl = 'db.php?action=updateRecordingThatHasStopped&stream=' + self.stream();
-            var updateRecordingInDB = $.ajax( updateRecordingInDBUrl );
-            updateRecordingInDB.done( function ( data ) {
-              self.statusMessages.push({
-                type: 'success',
-                text: 'Success. Recording was already stopped, database updated.'
-              });
-              self.renderButtonsAndStatus('notRecording');
-              self.getAndDisplayRecordings(false);
-            });
-          };
-        });
-      };
-
       if ( data ) {
         self.statusMessages.push({
             type: 'success',
