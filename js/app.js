@@ -80,7 +80,7 @@ var ViewModel = function() {
     getListOfRecordings.fail( function( data ) {
        self.statusMessages.push({
           type: 'error',
-          text: 'There was a problem with the AJAX request to get the list of recordings.'
+          text: 'There was a problem with the request to get the list of recordings.'
         });
     });
   }.bind(this);
@@ -145,7 +145,7 @@ var ViewModel = function() {
     startRecording.fail( function ( data ) {
       self.statusMessages.push({
           type: 'error',
-          text: 'There was a problem with the AJAX request to start recording.'
+          text: 'There was a problem with the request to start recording.'
         });
     });
   }.bind(this);
@@ -186,7 +186,7 @@ var ViewModel = function() {
     stopRecording.fail( function ( data ) {
       self.statusMessages.push({
           type: 'error',
-          text: 'There was a problem with the AJAX request.'
+          text: 'There was a problem with the request.'
         });
     });
 
