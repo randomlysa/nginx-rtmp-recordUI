@@ -1,11 +1,9 @@
 /*
      https://coolors.co/9c9096-432e36-d3cdcb-af8d86-afb7d8
 */
-
 body {
      font-size: 16pt;
 }
-
 
 #title {
      text-align: center;
@@ -14,7 +12,7 @@ body {
 h2, h3, h4 {
      text-align: center;
      padding: 5px;
-     background-color: #d3cdcb;
+     border-bottom: solid 2px #000;
 }
 
 .error {
@@ -66,7 +64,7 @@ h2, h3, h4 {
 .videoJSembed {
   position: relative;
   padding-top: 56.25%; /* 16:9 */
-  max-width: 99%;
+  max-width: 97%;
   overflow: none;
   margin: 0 auto;
 }
@@ -78,6 +76,11 @@ h2, h3, h4 {
   height: 100%;
   border: 0;
   padding: 0;
+}
+
+#listOfRecordingsTable {
+  width: 95%;
+  margin-left: 15px;
 }
 
 #listOfRecordingsTable tbody {
