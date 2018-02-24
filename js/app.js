@@ -198,6 +198,8 @@ var ViewModel = function() {
       self.recordingStatus('Status: Recording');
       self.recordingTitle(title);
       $( '#startRecordingButton' ).css('display', 'none');
+      // This button is currently set to 'Initializing recording...'
+      self.recordButtonText('Start Recording: ' + self.stream());
       $( '#stopRecordingButton' ).css('display', 'inline');
       this.getStorageUseage();
       window.setInterval( this.getStorageUseage, 15000 );
