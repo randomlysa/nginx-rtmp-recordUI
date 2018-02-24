@@ -110,7 +110,7 @@ var ViewModel = function() {
         self.recordButtonText('Start Recording: ' + self.stream());
         self.statusMessages.push({
           type: 'error',
-          text: 'There was a problem starting the recording. Perhaps your stream is not live?'
+          text: 'There was a problem starting the recording. Is the stream live?'
         });
         return;
       }
@@ -169,7 +169,7 @@ var ViewModel = function() {
         updateRecordingInDB.done( function ( data ) {
           self.statusMessages.push({
             type: 'success',
-            text: 'Data logged to the database' + data
+            text: 'Data logged to the database.' + data
           });
           self.renderButtonsAndStatus('notRecording');
           self.getAndDisplayRecordings(false);
@@ -254,7 +254,7 @@ var ViewModel = function() {
     updateNewTitle.fail( function() {
       self.statusMessages.push({
         type: 'error',
-        text: 'There was an error making the AJAX call to update your title.'
+        text: 'There was an error making the request to update your title.'
       });
     });
   }.bind(this);
