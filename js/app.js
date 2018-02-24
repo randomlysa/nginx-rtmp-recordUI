@@ -268,7 +268,7 @@ var ViewModel = function() {
   this.getStorageUseage = function() {
     var self = this;
     var getStorageUseageAjax = $.ajax({
-      url: 'files.php?stream=' + self.stream() + '&currentRecording=' + self.currentRecording(),
+      url: 'getFileSizes.php?stream=' + self.stream() + '&currentRecording=' + self.currentRecording(),
       dataType: 'json'
     });
     getStorageUseageAjax.done( function( data ) {
