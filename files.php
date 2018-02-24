@@ -7,14 +7,12 @@ $currentRecording = $_GET["currentRecording"];
 if (!$stream) { exit; }
 
 $allSizes = array("allRec" => 0, "currentRec" => 0);
-$scanDirs = array(PATH_TO_RECORDINGS, "/tmp/rec/");
 
 // Get size of current recording.
 $allSizes['currentRec'] = round(filesize(PATH_TO_RECORDINGS . $currentRecording) / 1000000, 2);
 
-// Get size of all recordings.
+// Get size of all recordings, including current.
 $recordedFiles = scandir(PATH_TO_RECORDINGS);
-// This now includes all recordings, including current.
 $sizeOfAllRecordings = 0;
 
 foreach ($recordedFiles as $file) {
