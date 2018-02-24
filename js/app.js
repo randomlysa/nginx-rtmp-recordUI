@@ -14,6 +14,7 @@ var ViewModel = function() {
   self = this;
 
   this.recordingStatus = ko.observable();
+  this.currentRecording = ko.observable();
   this.listOfRecordings = ko.observableArray();
   this.listOfRecordingsHeaderText = ko.observable();
   this.statusMessages = ko.observableArray();
@@ -119,6 +120,9 @@ var ViewModel = function() {
           type: 'success',
           text: 'Success. Recording started.'
       });
+
+      // Used to check the size of the current recording.
+      self.currentRecording(data.filename);
 
       // Insert file, title, stream name into the database.
       if (!self.recordingTitle()) {self.recordingTitle(data.filename);}
@@ -264,7 +268,7 @@ var ViewModel = function() {
   this.getStorageUseage = function() {
     var self = this;
     var getStorageUseageAjax = $.ajax({
-      url: 'files.php?stream=' + self.stream(),
+      url: 'files.php?stream=' + self.stream() + '&currentRecording=' + self.currentRecording(),
       dataType: 'json'
     });
     getStorageUseageAjax.done( function( data ) {
